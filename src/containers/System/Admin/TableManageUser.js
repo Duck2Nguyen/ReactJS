@@ -28,9 +28,12 @@ class TableManageUser extends Component {
     handleDeleteUser = (user) => {
         this.props.deleteAUserRedux(user.id)
     }
+    handleEditUser = (user) => {
+        this.props.handleEditUserFromParentKey(user)
+    }
     render() {
-        console.log("My check all user from redux", this.props.ListUsers)
-        console.log("Check state", this.state.usersRedux)
+        // console.log("My check all user from redux", this.props.ListUsers)
+        // console.log("Check state", this.state.usersRedux)
         let arrUsers = this.state.usersRedux;
         return (
             <table id="TableManageUser">
@@ -50,7 +53,9 @@ class TableManageUser extends Component {
                                 <td>{item.email}</td>
                                 <td>{item.address}</td>
                                 <td>
-                                    <button className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
+                                    <button
+                                        onClick={() => this.handleEditUser(item)}
+                                        className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
                                     <button
                                         className="btn-delete"
                                         onClick={() => this.handleDeleteUser(item)}
