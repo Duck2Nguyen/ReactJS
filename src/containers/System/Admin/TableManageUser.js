@@ -3,6 +3,16 @@ import { FormattedMessage } from 'react-intl';
 import * as actions from "../../../store/actions";
 import { connect } from 'react-redux';
 import './TableManageUser.scss';
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
+
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+// Finish!
+function handleEditorChange({ html, text }) {
+    console.log('handleEditorChange', html, text);
+}
 
 class TableManageUser extends Component {
 
@@ -32,41 +42,44 @@ class TableManageUser extends Component {
         this.props.handleEditUserFromParentKey(user)
     }
     render() {
-        // console.log("My check all user from redux", this.props.ListUsers)
-        // console.log("Check state", this.state.usersRedux)
         let arrUsers = this.state.usersRedux;
         return (
-            <table id="TableManageUser">
-                <tbody>
-                    <tr>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Email</th>
-                        <th>Address</th>
-                        <th>Actions</th>
-                    </tr>
-                    {arrUsers && arrUsers.map((item, index) => {
-                        return (
-                            <tr>
-                                <td>{item.firstName}</td>
-                                <td>{item.lastName}</td>
-                                <td>{item.email}</td>
-                                <td>{item.address}</td>
-                                <td>
-                                    <button
-                                        onClick={() => this.handleEditUser(item)}
-                                        className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
-                                    <button
-                                        className="btn-delete"
-                                        onClick={() => this.handleDeleteUser(item)}
-                                    ><i className="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
 
-            </table>
+            <>
+                <table id="TableManageUser">
+                    <tbody>
+                        <tr>
+                            <th>FirstName</th>
+                            <th>LastName</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                        {arrUsers && arrUsers.map((item, index) => {
+                            return (
+                                <tr>
+                                    <td>{item.firstName}</td>
+                                    <td>{item.lastName}</td>
+                                    <td>{item.email}</td>
+                                    <td>{item.address}</td>
+                                    <td>
+                                        <button
+                                            onClick={() => this.handleEditUser(item)}
+                                            className="btn-edit"><i className="fas fa-pencil-alt"></i></button>
+                                        <button
+                                            className="btn-delete"
+                                            onClick={() => this.handleDeleteUser(item)}
+                                        ><i className="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+
+                </table>
+                <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
+            </>
+
         );
     }
 
@@ -86,3 +99,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
+
