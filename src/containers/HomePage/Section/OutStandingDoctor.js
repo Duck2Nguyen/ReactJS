@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import Slider from 'react-slick';
 import * as actions from '../../../store/actions';
 import { LANGUAGES } from '../../../utils'
-
+import { withRouter } from 'react-router'
 
 class OutStandingDoctor extends Component {
     constructor(props) {
@@ -23,12 +23,18 @@ class OutStandingDoctor extends Component {
             })
         }
     }
+
+    handleViewDetailDoctor = (doctor) => {
+        console.log("my check view chanel infor", doctor)
+        this.props.history.push(`/detail-doctor/${doctor.id}`)
+    }
+
     render() {
-        console.log('check topdoctorredux', this.props.topDoctorsRedux)
+        // console.log('check topdoctorredux', this.props.topDoctorsRedux)
         let arrDoctors = this.state.arrDoctors;
         // arrDoctors = arrDoctors.concat(arrDoctors)
         let { language } = this.props
-        console.log('mycheck state doctor', arrDoctors)
+        // console.log('mycheck state doctor', arrDoctors)
         return (
             <div className="section-share section-outstanding-doctor">
                 <div className="section-container">
@@ -48,10 +54,10 @@ class OutStandingDoctor extends Component {
                                     if (item.image) {
                                         imageBase64 = new Buffer(item.image, 'base64').toString('binary')
                                     }
-                                    let nameVi = `${item.positionData.valueVi},${item.lastName} ${item.firstName}`;
-                                    let nameEn = `${item.positionData.valueEn},${item.firstName} ${item.lastName}`
+                                    let nameVi = `${item.positionData.valueVi}, ${item.lastName} ${item.firstName}`;
+                                    let nameEn = `${item.positionData.valueEn}, ${item.firstName} ${item.lastName}`
                                     return (
-                                        <div className='section-customize' key={index}>
+                                        <div className='section-customize' key={index} onClick={() => this.handleViewDetailDoctor(item)}>
                                             <div className='customize-border'>
                                                 <div className="outer-bg">
                                                     <div className="bg-image section-outstanding-doctor"
@@ -91,4 +97,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor));
