@@ -28,7 +28,7 @@ class ManageDoctor extends Component {
             // action
         }
     }
-    async componentDidMount() {
+    componentDidMount() {
         this.props.fetchAllDoctors()
     }
 
@@ -102,7 +102,6 @@ class ManageDoctor extends Component {
             })
         }
 
-        console.log(`duck2nguyen check res option`, res);
     }
 
     handleOnChangeDesc = (event) => {
