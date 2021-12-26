@@ -78,6 +78,20 @@
             "pricenone": "Giá Khám",
             "hidden": "Ẩn bảng giá",
             "method": "Người bệnh có thể thanh toán chi phí bằng hình thức: "
+        },
+        "booking-modal": {
+            "title": "Thông tin đặt lịch khám bệnh ",
+            "name": "Họ tên",
+            "phone": "Số điện thoại",
+            "email": "Email",
+            "address": "Địa chỉ liên hệ",
+            "reason": "Lý do khám",
+            "DOB": "Ngày sinh",
+            "gender": "Giới tính",
+            "confirm": "Xác nhận",
+            "cancel": "Hủy bỏ",
+            "free-booking": "Miễn phí đặt lịch",
+            "price-booking": "Giá khám:"
         }
     },
     "admin": {

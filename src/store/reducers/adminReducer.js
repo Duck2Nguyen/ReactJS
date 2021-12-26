@@ -17,7 +17,7 @@ const adminReducer = (state = initialState, action) => {
         case actionTypes.FETCH_GENDER_START:
             let copyState = { ...state };
             copyState.isLoadingGender = true;
-            console.log("my check fetch start", action)
+            // console.log("my check fetch start", action)
             return {
                 ...copyState
             }
