@@ -45,10 +45,20 @@ class DetailSpecialty extends Component {
                         })
                     }
                 }
+                let dataProvince = resProvince.data;
+                if (dataProvince && dataProvince.length > 0) {
+                    dataProvince.unshift({
+                        createdAt: null,
+                        keyMap: 'ALL',
+                        type: "PROVINCE",
+                        valueVi: "Toàn quốc",
+                        valueEn: "ALL"
+                    })
+                }
                 this.setState({
                     dataDetailSpecialty: res.data,
                     arrDoctorId: arrDoctorId,
-                    listProvince: resProvince.data
+                    listProvince: dataProvince ? dataProvince : []
                 })
             }
         }
@@ -59,14 +69,39 @@ class DetailSpecialty extends Component {
         }
     }
 
-    handleOnChangeSelect = (event) => {
-        console.log(event.target.value)
+    handleOnChangeSelect = async (event) => {
+        if (this.props.match && this.props.match.params && this.props.match.params.id) {
+            let id = this.props.match.params.id;
+            let location = event.target.value;
+            let res = await getAllDetailSpecialtyById({
+                id: id,
+                location: location
+            })
+            console.log("my checl", res)
+            if (res && res.errCode === 0) {
+                let data = res.data;
+                let arrDoctorId = []
+                if (data && !_.isEmpty(data)) {
+                    let arr = data.doctorSpecialty;
+                    if (arr && arr.length > 0) {
+                        arr.map(item => {
+                            arrDoctorId.push(item.doctorId)
+                        })
+                    }
+                }
+                this.setState({
+                    dataDetailSpecialty: res.data,
+                    arrDoctorId: arrDoctorId,
+                })
+            }
+            // console.log(this.state)
+        }
     }
 
     render() {
         let { language } = this.props
         let { arrDoctorId, dataDetailSpecialty, listProvince } = this.state;
-        console.log(this.state)
+        console.log('my check state', this.state)
         return (
             <div className='detail-specialty-container'>
                 <HomeHeader />
@@ -91,6 +126,7 @@ class DetailSpecialty extends Component {
                     </div>
                     {arrDoctorId && arrDoctorId.length > 0 &&
                         arrDoctorId.map((item, index) => {
+                            console.log(item)
                             return (
                                 <div className='each-doctor' key={index}>
                                     <div className='dt-content-left'>
@@ -98,6 +134,8 @@ class DetailSpecialty extends Component {
                                             <ProfileDoctor
                                                 doctorId={item}
                                                 isShowDescriptionDoctor={true}
+                                                isShowLinkDetail={true}
+                                                isShowPrice={false}
                                             // dataTime={dataTime}
                                             />
                                         </div>
